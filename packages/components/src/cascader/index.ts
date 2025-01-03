@@ -2,11 +2,11 @@ import { defineComponent, h } from 'vue'
 import { useField } from '@formily/vue'
 import { observer } from '@formily/reactive-vue'
 import { isVoidField, Field } from '@formily/core'
-import { ElCascader } from 'element-plus'
+import { CascaderValue, ElCascader } from 'element-plus'
 
 import { PreviewText } from '../preview-text'
 
-export type CascaderProps = typeof ElCascader
+export type CascaderProps = InstanceType<typeof ElCascader>['$props']
 
 // export const Cascader = connect(
 //   ElCascader,
@@ -32,7 +32,7 @@ export const Cascader = observer(
             ...attrs,
             options: field?.dataSource,
             modelValue: field?.value,
-            onChange: (...args: any[]) => {
+            onChange: (...args: [CascaderValue]) => {
               props.onChange(...args)
             },
           },
@@ -41,6 +41,6 @@ export const Cascader = observer(
       }
     },
   })
-)
+) as typeof ElCascader
 
 export default Cascader

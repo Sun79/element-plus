@@ -146,7 +146,7 @@ const FormGridInner = observer(
       }
     },
   })
-) as any
+)
 
 const FormGridColumn = observer(
   defineComponent({

@@ -4,9 +4,9 @@ import { stylePrefix } from '../__builtins__'
 import { useFormLayout } from '../form-layout'
 
 export type SpaceProps = {
-  size: 'small' | 'middle' | 'large' | number
-  direction: 'horizontal' | 'vertical'
-  align: 'start' | 'end' | 'center' | 'baseline'
+  size?: 'small' | 'middle' | 'large' | number
+  direction?: 'horizontal' | 'vertical'
+  align?: 'start' | 'end' | 'center' | 'baseline'
 }
 
 const spaceSize = {

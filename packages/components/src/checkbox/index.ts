@@ -1,4 +1,4 @@
-import { defineComponent, PropType, h, Component } from 'vue'
+import { defineComponent, PropType, h, DefineComponent } from 'vue'
 import { connect, mapProps, mapReadPretty } from '@formily/vue'
 import {
   composeExport,
@@ -7,19 +7,25 @@ import {
   SlotTypes,
 } from '../__builtins__/shared'
 
-import { ElCheckbox, ElCheckboxGroup, ElCheckboxButton } from 'element-plus'
+import {
+  ElCheckbox,
+  ElCheckboxGroup,
+  ElCheckboxButton,
+  type CheckboxProps as ElCheckboxProps,
+  type CheckboxGroupProps as ElCheckboxGroupProps,
+} from 'element-plus'
 import { PreviewText } from '../preview-text'
 
-type ElCheckboxProps = Omit<typeof ElCheckbox, 'value'> & {
-  value: ElCheckboxProps['label']
+interface CustomCheckboxProps {
+  option:
+    | (Partial<Omit<ElCheckboxProps, 'label'>> & {
+        label: SlotTypes
+        value: ElCheckboxProps['value']
+      })
+    | string
 }
 
-export interface CheckboxProps extends ElCheckboxProps {
-  option: Omit<typeof ElCheckbox, 'value'> & {
-    value: ElCheckboxProps['label']
-    label: SlotTypes
-  }
-}
+export type CheckboxProps = ElCheckboxProps & CustomCheckboxProps
 
 const CheckboxOption = defineComponent({
   name: 'FCheckbox',
@@ -63,19 +69,21 @@ const CheckboxOption = defineComponent({
       )
     }
   },
-})
+}) as unknown as typeof ElCheckbox & DefineComponent<CustomCheckboxProps>
 
-export type CheckboxGroupProps = typeof ElCheckboxGroup & {
+interface CustomCheckboxGroupProps {
   value: any[]
   options?: Array<CheckboxProps | string>
   optionType: 'default' | 'button'
 }
 
+export type CheckboxGroupProps = ElCheckboxGroupProps & CustomCheckboxGroupProps
+
 const TransformElCheckboxGroup = transformComponent(ElCheckboxGroup, {
   change: 'update:modelValue',
 })
 
-const CheckboxGroupOption: Component = defineComponent({
+const CheckboxGroupOption = defineComponent({
   name: 'FCheckboxGroup',
   props: {
     options: {
@@ -133,7 +141,8 @@ const CheckboxGroupOption: Component = defineComponent({
       )
     }
   },
-})
+}) as unknown as typeof ElCheckboxGroup &
+  DefineComponent<CustomCheckboxGroupProps>
 
 const CheckboxGroup = connect(
   CheckboxGroupOption,
@@ -143,9 +152,12 @@ const CheckboxGroup = connect(
   })
 )
 
-const InnerCheckbox = connect(CheckboxOption, mapProps({
-  value: 'modelValue',
-}))
+const InnerCheckbox = connect(
+  CheckboxOption,
+  mapProps({
+    value: 'modelValue',
+  })
+)
 
 export const Checkbox = composeExport(InnerCheckbox, {
   Group: CheckboxGroup,

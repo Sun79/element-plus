@@ -515,7 +515,7 @@ const Item = connect(
       if (isVoidField(field)) return props
       if (!field) return props
       const takeMessage = () => {
-        const rejectEmpty = (messages: any[]) => messages.filter(msg => !!msg)
+        const rejectEmpty = (messages: any[]) => messages.filter((msg) => !!msg)
         if (field.validating) return
         if (props.feedbackText) return props.feedbackText
         if (field.selfErrors.length) return rejectEmpty(field.selfErrors)

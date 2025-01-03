@@ -64,7 +64,7 @@ const Select = observer(
     setup(_props, { attrs }) {
       const fieldRef = useField<Field>()
       const field = fieldRef.value
-      const props = attrs as unknown as SelectProps
+      const props = attrs as unknown as SelectProps & { value: any }
       const placeholder = usePlaceholder()
       const getSelected = () => {
         const value = props.value
@@ -80,10 +80,10 @@ const Select = observer(
       const getLabels = () => {
         const selected = getSelected()
         const dataSource: any[] = field?.dataSource?.length
-        ? field.dataSource
-        : props?.options?.length
-        ? props.options
-        : []
+          ? field.dataSource
+          : props?.options?.length
+          ? props.options
+          : []
         if (!selected.length) {
           return h(
             ElTag,
@@ -132,7 +132,7 @@ const Cascader = observer(
     setup(_props, { attrs }) {
       const fieldRef = useField<Field>()
       const field = fieldRef.value
-      const props = attrs as unknown as CascaderProps
+      const props = attrs as unknown as CascaderProps & { value: any }
       const dataSource: any[] = field?.dataSource?.length
         ? field.dataSource
         : props?.options?.length
@@ -206,7 +206,7 @@ const Cascader = observer(
 const DatePicker = defineComponent<DatePickerProps>({
   name: 'FPreviewTextDatePicker',
   setup(_props, { attrs }) {
-    const props = attrs as unknown as DatePickerProps
+    const props = attrs as unknown as DatePickerProps & { value: any }
     const placeholder = usePlaceholder()
     const getLabels = () => {
       if (isArr(props.value)) {
@@ -238,7 +238,7 @@ const DatePicker = defineComponent<DatePickerProps>({
 const TimePicker = defineComponent<TimePickerProps>({
   name: 'FPreviewTextTimePicker',
   setup(_props, { attrs }) {
-    const props = attrs as unknown as TimePickerProps
+    const props = attrs as unknown as TimePickerProps & { value: any }
     // const format = props.pickerOptions?.format || 'HH:mm:ss'
     const placeholder = usePlaceholder()
     const getLabels = () => {

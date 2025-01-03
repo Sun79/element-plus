@@ -1,13 +1,18 @@
 import { connect, mapProps, mapReadPretty } from '@formily/vue'
-import { defineComponent, h } from 'vue'
+import { DefineComponent, defineComponent, h } from 'vue'
 import { PreviewText } from '../preview-text'
 
 import { ElSelect, ElOption } from 'element-plus'
 import { transformComponent } from '../__builtins__'
 
-export type SelectProps = typeof ElSelect & {
-  options?: Array<typeof ElOption>
+type ElSelectProps = InstanceType<typeof ElSelect>['$props']
+type ElOptionProps = InstanceType<typeof ElOption>['$props']
+
+interface CustomSelectProps {
+  options?: ElOptionProps[]
 }
+
+export type SelectProps = ElSelectProps & CustomSelectProps
 
 const TransformElSelect = transformComponent<SelectProps>(ElSelect, {
   change: 'update:modelValue',
@@ -68,7 +73,7 @@ const SelectOption = defineComponent({
       )
     }
   },
-})
+}) as typeof ElSelect & DefineComponent<CustomSelectProps>
 
 export const Select = connect(
   SelectOption,

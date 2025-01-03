@@ -338,41 +338,37 @@ const ArrayTablePagination = defineComponent({
         {
           class: [`${prefixCls}-pagination`],
         },
-        h(
-          Space,
-          {},
-          {
-            default: () => [
-              h(
-                StatusSelect,
-                {
-                  value: current.value,
-                  onChange: (val: number) => {
-                    current.value = val
-                  },
-                  pageSize: pageSize.value,
-                  options: pages.value,
+        h(Space, null, {
+          default: () => [
+            h(
+              StatusSelect,
+              {
+                value: current.value,
+                onChange: (val: number) => {
+                  current.value = val
                 },
-                {}
-              ),
-              h(
-                ElPagination,
-                {
-                  background: true,
-                  layout: 'prev, pager, next',
-                  ...attrs,
-                  pageSize: pageSize.value,
-                  pageCount: totalPage.value,
-                  currentPage: current.value,
-                  onCurrentChange: (val: number) => {
-                    current.value = val
-                  },
+                pageSize: pageSize.value,
+                options: pages.value,
+              },
+              {}
+            ),
+            h(
+              ElPagination,
+              {
+                background: true,
+                layout: 'prev, pager, next',
+                ...attrs,
+                pageSize: pageSize.value,
+                pageCount: totalPage.value,
+                currentPage: current.value,
+                onCurrentChange: (val: number) => {
+                  current.value = val
                 },
-                {}
-              ),
-            ],
-          }
-        )
+              },
+              {}
+            ),
+          ],
+        })
       )
     }
 

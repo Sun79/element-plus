@@ -1,18 +1,25 @@
 import { Field } from '@formily/core'
-import { defineComponent, h } from 'vue'
+import { DefineComponent, defineComponent, h } from 'vue'
 import { connect, mapProps, useField, FragmentComponent } from '@formily/vue'
 import {
   UploadFilled,
   Upload as UploadIcon,
   Plus,
 } from '@element-plus/icons-vue'
-import { ElUpload, ElButton, ElIcon } from 'element-plus'
+import {
+  ElUpload,
+  ElButton,
+  ElIcon,
+  type UploadProps as ElUploadProps,
+} from 'element-plus'
 import type { UploadFile } from 'element-plus/es/components/upload/src/upload'
 
-export type UploadProps = typeof ElUpload & {
+interface CustomUploadProps {
   textContent?: string
   errorAdaptor?: (error?: ErrorEvent) => string
 }
+
+export type UploadProps = ElUploadProps & CustomUploadProps
 
 const UploadWrapper = defineComponent({
   name: 'FUpload',
@@ -127,7 +134,7 @@ const UploadWrapper = defineComponent({
       return h(ElUpload as any, { ...props, ...attrs }, children)
     }
   },
-})
+}) as unknown as typeof ElUpload & DefineComponent<CustomUploadProps>
 
 export const Upload = connect(
   UploadWrapper,

@@ -1,8 +1,7 @@
 import { connect, mapProps } from '@formily/vue'
-import { ElInput } from 'element-plus'
 import { Input } from '../input'
 
-export type PasswordProps = typeof ElInput
+export type { InputProps as PasswordProps } from 'element-plus'
 
 export const Password = connect(
   Input,

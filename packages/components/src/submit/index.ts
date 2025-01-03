@@ -1,17 +1,19 @@
-import { defineComponent, SetupContext } from 'vue'
+import { DefineComponent, defineComponent, SetupContext } from 'vue'
 import { h, useParentForm } from '@formily/vue'
 import { IFormFeedback } from '@formily/core'
 import { observer } from '@formily/reactive-vue'
 
-import type { ElButton as ElButtonProps } from 'element-plus'
+import type { ButtonProps as ElButtonProps } from 'element-plus'
 import { ElButton } from 'element-plus'
 
-export type ISubmitProps = {
+interface CustomButtonProps {
   onClick?: (e: MouseEvent) => any
   onSubmit?: (values: any) => any
   onSubmitSuccess?: (payload: any) => void
   onSubmitFailed?: (feedbacks: IFormFeedback[]) => void
-} & typeof ElButtonProps
+}
+
+export type ISubmitProps = CustomButtonProps & ElButtonProps
 
 export const Submit = observer(
   defineComponent({
@@ -39,7 +41,7 @@ export const Submit = observer(
               attrs.loading !== undefined ? attrs.loading : form?.submitting,
             onClick: (e: any) => {
               if (onClick) {
-                if (onClick(e) === false) return
+                if ((onClick as any)(e) === false) return
               }
               if (onSubmit) {
                 form
@@ -54,6 +56,6 @@ export const Submit = observer(
       }
     },
   })
-)
+) as typeof ElButton & DefineComponent<CustomButtonProps>
 
 export default Submit

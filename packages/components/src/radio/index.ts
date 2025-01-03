@@ -1,27 +1,33 @@
 import { connect, mapProps, mapReadPretty } from '@formily/vue'
-import { defineComponent, PropType, h } from 'vue'
+import { defineComponent, PropType, h, DefineComponent } from 'vue'
 import {
   composeExport,
-  transformComponent,
   resolveComponent,
   SlotTypes,
 } from '../__builtins__/shared'
 import { PreviewText } from '../preview-text'
 
-import { ElRadio, ElRadioGroup, ElRadioButton } from 'element-plus'
+import {
+  ElRadio,
+  ElRadioGroup,
+  ElRadioButton,
+  type RadioProps as ElRadioProps,
+  type RadioGroupProps as ElRadioGroupProps,
+} from 'element-plus'
 
-export type ElRadioProps = typeof ElRadio
-export type RadioGroupProps = typeof ElRadioGroup & {
+interface CustomRadioGroupProps {
   value: any
   options?: (
-    | (Omit<ElRadioProps, 'value'> & {
-        value: ElRadioProps['label']
+    | (Partial<Omit<ElRadioProps, 'label'>> & {
         label: SlotTypes
+        value: ElRadioProps['value']
       })
     | string
   )[]
-  optionType: 'defalt' | 'button'
+  optionType: 'default' | 'button'
 }
+
+export type RadioGroupProps = ElRadioGroupProps & CustomRadioGroupProps
 
 const RadioGroupOption = defineComponent({
   name: 'FRadioGroup',
@@ -84,7 +90,7 @@ const RadioGroupOption = defineComponent({
       )
     }
   },
-})
+}) as unknown as typeof ElRadioGroup & DefineComponent<CustomRadioGroupProps>
 
 const RadioGroup = connect(
   RadioGroupOption,

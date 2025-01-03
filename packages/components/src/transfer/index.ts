@@ -2,7 +2,7 @@ import { connect, mapProps } from '@formily/vue'
 
 import { ElTransfer } from 'element-plus'
 
-export type TransferProps = typeof ElTransfer
+export { TransferProps } from 'element-plus'
 
 export const Transfer = connect(
   ElTransfer,

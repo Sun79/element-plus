@@ -1,9 +1,12 @@
 import { transformComponent } from '../__builtins__'
 import { connect, mapProps, mapReadPretty } from '@formily/vue'
-import { ElInputNumber } from 'element-plus'
+import {
+  ElInputNumber,
+  type InputNumberProps as ElInputNumberProps,
+} from 'element-plus'
 import { PreviewText } from '../preview-text'
 
-export type InputNumberProps = typeof ElInputNumber
+export type InputNumberProps = ElInputNumberProps
 
 const TransformElInputNumber = transformComponent<InputNumberProps>(
   ElInputNumber,
@@ -12,7 +15,7 @@ const TransformElInputNumber = transformComponent<InputNumberProps>(
   }
 )
 
-export const InputNumber = connect(
+export const InputNumber = connect<typeof ElInputNumber>(
   TransformElInputNumber,
   mapProps(
     {

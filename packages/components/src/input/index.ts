@@ -1,15 +1,15 @@
 import { composeExport, transformComponent } from '../__builtins__'
 import { connect, mapProps, mapReadPretty } from '@formily/vue'
 import { PreviewText } from '../preview-text'
-import { ElInput } from 'element-plus'
+import { ElInput, type InputProps as ElInputProps } from 'element-plus'
 
-export type InputProps = typeof ElInput
+export type InputProps = ElInputProps
 
 const TransformElInput = transformComponent<InputProps>(ElInput, {
   change: 'update:modelValue',
 })
 
-const InnerInput = connect(
+const InnerInput = connect<typeof ElInput>(
   TransformElInput,
   mapProps({
     value: 'modelValue',
