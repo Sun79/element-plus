@@ -10,3 +10,5 @@ vue.config.js
 tsconfig.json
 .umi
 src
+!dist
+!esm
