@@ -24,6 +24,8 @@ const InnerSelect = connect(
   mapReadPretty(PreviewText.Select)
 )
 
+type SelectComponentType = typeof ElSelect & DefineComponent<CustomSelectProps>
+
 const SelectOption = defineComponent({
   name: 'FSelect',
   props: ['options'],
@@ -73,7 +75,7 @@ const SelectOption = defineComponent({
       )
     }
   },
-}) as typeof ElSelect & DefineComponent<CustomSelectProps>
+}) as SelectComponentType
 
 export const Select = connect(
   SelectOption,
